@@ -1,0 +1,31 @@
+@model Wedding
+
+
+<div class="container w-75 mx-auto">
+    <h2 class="text-center">Plan Your Wedding!</h2>
+
+    <form class="shadow p-3 rounded text-center"  asp-controller="Wedding" asp-action="CreateWedding" method="POST">
+        <div class="mb-3">
+            <label asp-for="WedderOne">Partner One</label>
+            <span asp-validation-for="WedderOne" class="text-danger font-weight-bold"></span>
+            <input class="form-control text-center" asp-for="WedderOne">
+        </div>
+        <div class="mb-3">
+            <label asp-for="WedderTwo">Partner Two</label>
+            <span asp-validation-for="WedderTwo" class="text-danger font-weight-bold"></span>
+            <input class="form-control text-center" asp-for="WedderTwo">
+        </div>
+        <div class="mb-3">
+            <label asp-for="WeddingDate">Wedding Date</label>
+            <span asp-validation-for="WeddingDate" class="text-danger font-weight-bold"></span>
+            <input class="form-control text-center" asp-for="WeddingDate" >
+        </div>
+        <div class="mb-3">
+            <label asp-for="Address"></label>
+            <span asp-validation-for="Address" class="text-danger font-weight-bold"></span>
+            <input class="form-control text-center" asp-for="Address">
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+
+</div>

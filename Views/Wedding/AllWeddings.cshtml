@@ -1,0 +1,68 @@
+@model List<Wedding>
+
+<div class="text-center">
+    <h1 class="text-center">Wedding Planner!</h1>
+    <br>
+    @{
+        bool ShowCreateNewWedding = Model.Count == 0;
+        if (ShowCreateNewWedding)
+        {
+            <a asp-controller="Wedding" asp-action="NewWedding" class="btn btn-primary"> Create New Wedding!</a>
+        }
+    }
+</div>
+<br>
+
+
+@* bool userAlreadyLiked = post.UserLikes.Any(like => like.UserId == Context.Session.GetInt32("UUID")); *@
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Wedding Of</th>
+                <th>Date</th>
+                <th>Guest Count</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Wedding wedding in Model)
+            {
+                bool GuestRegister = wedding.Guests.Any(g => g.UserId == Context.Session.GetInt32("UUID"));
+
+                <tr>
+                    <td><a asp-controller="Wedding" asp-action="ViewWedding" asp-route-id="@wedding.WeddingId">@wedding.WedderOne & @wedding.WedderTwo</a></td>
+                    <td>@wedding.WeddingDate</td>
+                    <td>@wedding.Guests.Count</td>
+                    <td>
+                        @if (wedding.UserID == Context.Session.GetInt32("UUID"))
+                        {
+                            <form asp-controller="Wedding" asp-action="DeleteWedding" asp-route-weddingId="@wedding.WeddingId"
+                                method="POST">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form asp-controller="Wedding" asp-action="WeddingRSVP" asp-route-weddingId="@wedding.WeddingId" method="POST">
+                                <button class="btn btn-info">
+                                    @if (GuestRegister)
+                                    {
+                                        <span>Un-RSVP</span>
+                                    }
+                                    else
+                                    {
+                                        <span>RSVP</span>
+                                    }
+                                </button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
